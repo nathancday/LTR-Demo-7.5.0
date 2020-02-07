@@ -52,7 +52,7 @@ def load_features(feature_set_name: str):
     }
     #path = "ltr/featureset/%s" % feature_set_name
     #path = "ltr/_doc/%s" % feature_set_name
-    path = "ltr/%s/" % feature_set_name
+    path = "ltr/%s" % feature_set_name
 
     full_path = urljoin(ES_HOST, path)
     Logger.logger.info("POST %s" % full_path)

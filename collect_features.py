@@ -8,10 +8,8 @@ logQuery = {
     "query": {
         "bool": {
             "filter": [
-                {
-                    "terms": {
-                        "_id": ["7555"]
-
+                {"terms": {
+                    "_id": ["7555"]
                     }
                 }
             ],
@@ -51,20 +49,15 @@ def feature_dict_to_list(ranklib_labeled_features):
 
 
 def log_features(es, judgments_dict, search_index):
-    print("Inside log features")
-
     for qid, judgments in judgments_dict.items():
         keywords = judgments[0].keywords
         doc_ids = [judgment.docId for judgment in judgments]
-        logQuery["query"]["bool"]["filter"][0]["terms"]["_id"] = doc_ids
-        logQuery["query"]["bool"]["should"][0]["sltr"]["params"]["keywords"] = keywords
-        logQuery["query"]["bool"]["should"][0]["sltr"]["featureset"] = FEATURE_SET_NAME
+        logQuery['query']['bool']['filter'][0]['terms']['_id'] = doc_ids
+        logQuery['query']['bool']['should'][0]['sltr']['params']['keywords'] = keywords
+        logQuery['query']['bool']['should'][0]['sltr']['featureset'] = FEATURE_SET_NAME
         Logger.logger.info("POST")
         Logger.logger.info(json.dumps(logQuery, indent=2))
-        print(search_index)
-        print(logQuery)
         res = es.search(index=search_index, body=logQuery)
-        print("Success log")
         # Add feature back to each judgment
         features_per_doc = {}
         for doc in res['hits']['hits']:

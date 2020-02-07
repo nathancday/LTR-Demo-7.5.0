@@ -37,8 +37,8 @@ def save_model(script_name, feature_set, model_fname):
     with open(model_fname) as modelFile:
         model_content = modelFile.read()
         # path = "ltr/featureset/%s/createmodel" % feature_set
-        #path = "ltr/_featureset/%s/createmodel" % feature_set
-        path = "ltr/%s/createmodel" % feature_set
+        path = "_ltr/_featureset/%s/_createmodel" % feature_set
+        # path = "ltr/%s/createmodel" % feature_set
         #path = "ltr/_doc/%s/createmodel" % feature_set
         full_path = urljoin(ES_HOST, path)
         print(full_path)

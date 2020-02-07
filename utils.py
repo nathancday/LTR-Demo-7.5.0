@@ -24,21 +24,26 @@ FEATURE_SET_NAME = config[config_set]['FeatureSetName']
 JUDGMENTS_FILE = config[config_set]['JudgmentsFile']
 JUDGMENTS_FILE_FEATURES = config[config_set]['JudgmentsFileWithFeature']
 INDEX_NAME = config[config_set]['IndexName']
-CA_CERT = config[config_set]['ca_cert']
-CLIENT_CERT = config[config_set]['client_certificate']
-CLIENT_KEY= config[config_set]['client_key']
+# CA_CERT = config[config_set]['ca_cert']i
+# CLIENT_CERT = config[config_set]['client_certificate']
+# CLIENT_KEY= config[config_set]['client_key']
 
-
-def elastic_connection(url=None, timeout=1000, http_auth=auth, ca_certs=CA_CERT, client_cert=CLIENT_CERT, client_key=CLIENT_KEY):
+def elastic_connection(url=None, timeout=1000, http_auth=auth):
     if url is None:
         url = ES_HOST
-    # if elasticsearch.Elasticsearch(url, timeout=timeout, http_auth=http_auth, verify_certs= True, use_ssl=True, ca_certs=CA_CERT, client_cert=CLIENT_CERT, client_key=CLIENT_KEY).ping:
-    #     print(" Connection Success")
-    # else:
-    #     print("Failure")
-    return elasticsearch.Elasticsearch(url, timeout=timeout, http_auth=http_auth, verify_certs= False)
+    return elasticsearch.Elasticsearch(url, timeout=timeout, http_auth=http_auth)
 
-def Elasticsearch(url=None, timeout=1000, http_auth=auth):
-    if url is None:
-        url = ES_HOST
-    return elasticsearch.Elasticsearch(url, timeout=timeout, http_auth=http_auth, verify_certs= False)
+
+# def elastic_connection(url=None, timeout=1000, http_auth=auth, ca_certs=CA_CERT, client_cert=CLIENT_CERT, client_key=CLIENT_KEY):
+#     if url is None:
+#         url = ES_HOST
+#     # if elasticsearch.Elasticsearch(url, timeout=timeout, http_auth=http_auth, verify_certs= True, use_ssl=True, ca_certs=CA_CERT, client_cert=CLIENT_CERT, client_key=CLIENT_KEY).ping:
+#     #     print(" Connection Success")
+#     # else:
+#     #     print("Failure")
+#     return elasticsearch.Elasticsearch(url, timeout=timeout, http_auth=http_auth, verify_certs= False)
+
+# def Elasticsearch(url=None, timeout=1000, http_auth=auth):
+#     if url is None:
+#         url = ES_HOST
+#     return elasticsearch.Elasticsearch(url, timeout=timeout, http_auth=http_auth, verify_certs= False)
