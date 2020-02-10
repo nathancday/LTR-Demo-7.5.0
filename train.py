@@ -36,20 +36,12 @@ def save_model(script_name, feature_set, model_fname):
 
     with open(model_fname) as modelFile:
         model_content = modelFile.read()
-        # path = "ltr/featureset/%s/createmodel" % feature_set
         path = "_ltr/_featureset/%s/_createmodel" % feature_set
-        # path = "ltr/%s/createmodel" % feature_set
-        #path = "ltr/_doc/%s/createmodel" % feature_set
         full_path = urljoin(ES_HOST, path)
-        print(full_path)
         model_payload['model']['model']['definition'] = model_content
-
-
         Logger.logger.info("POST %s" % full_path)
         head = {'Content-Type': 'application/json'}
-        print("I am here")
-
-        resp = requests.post(full_path, data=json.dumps(model_payload), headers=head, auth=ES_AUTH, verify=False)
+        resp = requests.post(full_path, data=json.dumps(model_payload), headers=head, auth=ES_AUTH)
         Logger.logger.info(resp.status_code)
         if resp.status_code >= 300:
             Logger.logger.error(resp.text)
@@ -69,8 +61,7 @@ if __name__ == "__main__":
     log_features(es, judgments_dict=movieJudgments, search_index=INDEX_NAME)
     build_features_judgments_file(movieJudgments, filename=JUDGMENTS_FILE_FEATURES)
     # Train each ranklib model type
-    #for modelType in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
-    for modelType in [6]:
+    for modelType in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
         # 0, MART
         # 1, RankNet
         # 2, RankBoost
@@ -83,5 +74,4 @@ if __name__ == "__main__":
         Logger.logger.info("*** Training %s " % modelType)
         train_model(judgments_with_features_file=JUDGMENTS_FILE_FEATURES, model_output='model.txt',
                     which_model=modelType)
-        print("train_model success")
         save_model(script_name="test_%s" % modelType, feature_set=FEATURE_SET_NAME, model_fname='model.txt')

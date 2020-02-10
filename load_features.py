@@ -52,7 +52,8 @@ def load_features(feature_set_name: str):
     }
     #path = "ltr/featureset/%s" % feature_set_name
     #path = "ltr/_doc/%s" % feature_set_name
-    path = "ltr/%s" % feature_set_name
+    # path = "ltr/%s" % feature_set_name
+    path = "_ltr/_featureset/%s" % feature_set_name
 
     full_path = urljoin(ES_HOST, path)
     Logger.logger.info("POST %s" % full_path)
@@ -65,7 +66,7 @@ def load_features(feature_set_name: str):
 
 def init_default_store():
     """ Initialize the default feature store. """
-    path = urljoin(ES_HOST, 'ltr')
+    path = urljoin(ES_HOST, '_ltr')
     Logger.logger.info("DELETE %s" % path)
     resp = requests.delete(path, auth=ES_AUTH, verify=False)
     Logger.logger.info("%s" % resp.status_code)

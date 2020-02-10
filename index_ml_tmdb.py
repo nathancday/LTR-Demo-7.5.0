@@ -37,10 +37,7 @@ def reindex(es_connection, analysis_settings=None, mapping_settings=None, movie_
 
 
 def bulk_docs(movie_dict, index):
-    print(len(movie_dict))
     for movie_id, movie in movie_dict.items():
-
-
         if 'release_date' in movie and movie['release_date'] == "":
             del movie['release_date']
         enrich(movie)
@@ -48,7 +45,6 @@ def bulk_docs(movie_dict, index):
                    "_type": "movie",
                    "_id": movie_id,
                    "_source": movie}
-
         yield add_cmd
         if 'title' in movie:
             Logger.logger.info("%s added to %s" % (movie['title'].encode('utf-8'), index))
@@ -56,5 +52,5 @@ def bulk_docs(movie_dict, index):
 
 if __name__ == "__main__":
     es = elastic_connection(timeout=30)
-    tmdb_movie_dict = json.loads(open('tmdb.json',encoding='utf-8').read())
+    tmdb_movie_dict = json.loads(open('tmdb.json').read())
     reindex(es, movie_dict=tmdb_movie_dict)
